@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import time
 import codecs
 import serial
-import src.thermal_controller.bit_converter as bc
+import bit_converter as bc
 # degree_sign = u'\N{DEGREE SIGN}'
 
 
@@ -151,12 +151,12 @@ class CNi:
         _dict = {'decimal': decimal,
                  'units': units,
                  'filter_constant': filter_constant}
-        _valid = {'decimal': [0, 2],
-                  'units': [0, 2],
-                  'filter_constant': [0, 2]}
-        _valid_names = {'decimal': [1, 2, 3, 4],
-                        'units': ['F', 'C'],
-                        'filter_constant': [2**x for x in range(8)]}
+        _valid = {'decimal': [1, 4],
+                  'units': [0, 1],
+                  'filter_constant': [0, 7]}
+        _valid_names = {'decimal': ['','FFFF', 'FFF.F', 'FF.FF', 'F.FFF'],
+                        'units': ['C', 'F'],
+                        'filter_constant': [str(2**x) for x in range(8)]}
 
         settings = self.memory_process(_addr, _indices, _dict, _valid, _valid_names)
         return settings
